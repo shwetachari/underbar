@@ -285,6 +285,18 @@
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
+    var storage = {};
+    return function() {
+      var key = JSON.stringify(arguments);
+      if(storage[key]) {
+        return storage[key];
+      }
+      else {
+        var result = func.apply(this, arguments);
+        storage[key] = result;
+        return result;
+      }
+    };
   };
 
   // Delays a function for the given number of milliseconds, and then calls
@@ -294,6 +306,9 @@
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
+    var args = Array.prototype.slice.call(arguments, 2);
+    var execFunction = function(){ return func.apply(this, args); };
+    setTimeout(execFunction.bind(this, args), wait);
   };
 
 
@@ -308,6 +323,14 @@
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
+    var arrayCopy = array.slice(0);
+    var shuffledArr = [];
+    while (arrayCopy.length > 0) {
+      var randomIndex = Math.floor(Math.random() * arrayCopy.length);
+      shuffledArr.push(arrayCopy[randomIndex]);
+      arrayCopy.splice(randomIndex, 1);
+    }
+    return shuffledArr;
   };
 
 
@@ -322,6 +345,7 @@
   // Calls the method named by functionOrKey on each value in the list.
   // Note: You will need to learn a bit about .apply to complete this.
   _.invoke = function(collection, functionOrKey, args) {
+    
   };
 
   // Sort the object's values by a criterion produced by an iterator.
