@@ -362,6 +362,11 @@
   // of that string. For example, _.sortBy(people, 'name') should sort
   // an array of people by their name.
   _.sortBy = function(collection, iterator) {
+    if (typeof(iterator) === 'string') {
+
+    } else {
+
+    }
   };
 
   // Zip together two or more arrays with elements of the same index
@@ -370,6 +375,13 @@
   // Example:
   // _.zip(['a','b','c','d'], [1,2,3]) returns [['a',1], ['b',2], ['c',3], ['d',undefined]]
   _.zip = function() {
+    var args = Array.prototype.slice.call(arguments);
+    // return _.reduce(args, function(acc, curr) {
+    //   acc.concat(_.map(acc, function(elem, index) {
+    //     return elem.concat(curr[index]);
+    //   }));
+    //   return acc;
+    // });
   };
 
   // Takes a multidimensional array and converts it to a one-dimensional array.
@@ -377,11 +389,15 @@
   //
   // Hint: Use Array.isArray to check if something is an array
   _.flatten = function(nestedArray, result) {
+    return _.reduce(nestedArray, function(acc, curr) {
+      return Array.isArray(curr) ? acc.concat(_.flatten(curr)) : acc.concat(curr);
+    }, []);
   };
 
   // Takes an arbitrary number of arrays and produces an array that contains
   // every item shared between all the passed-in arrays.
   _.intersection = function() {
+    var args = Array.prototype.slice.call(arguments);
   };
 
   // Take the difference between one array and a number of other arrays.
