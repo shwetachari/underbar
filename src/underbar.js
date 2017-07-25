@@ -398,6 +398,12 @@
   // every item shared between all the passed-in arrays.
   _.intersection = function() {
     var args = Array.prototype.slice.call(arguments);
+    return _.reduce(args, function(acc, curr) {
+      acc = args[0];
+      return _.filter(acc, function(elem) {
+        return _.contains(curr, elem);
+      });
+    });
   };
 
   // Take the difference between one array and a number of other arrays.
