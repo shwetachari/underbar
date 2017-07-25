@@ -84,13 +84,19 @@
 
   // Return all elements of an array that pass a truth test.
   _.filter = function(collection, test) {
-    var result = [];
-    _.each(collection, function(item) {
-      if(test(item)) {
-        result.push(item);
+    // var result = [];
+    // _.each(collection, function(item) {
+    //   if(test(item)) {
+    //     result.push(item);
+    //   }
+    // });
+    // return result;
+    return _.reduce(collection, function(acc,curr) {
+      if(test(curr)) {
+        acc = acc.concat(curr);
       }
-    });
-    return result;
+      return acc;
+    }, []);
   };
 
   // Return all elements of an array that don't pass a truth test.
@@ -109,11 +115,14 @@
 
   // Return the results of applying an iterator to each element.
   _.map = function(collection, iterator) {
-    var results = [];
-     _.each(collection, function(item) {
-       results.push(iterator(item));
-     });
-    return results;
+    // var results = [];
+    //  _.each(collection, function(item) {
+    //    results.push(iterator(item));
+    //  });
+    // return results;
+    return _.reduce(collection, function(acc,curr) {
+      return acc.concat(iterator(curr));
+    }, []);
   };
 
   /*
