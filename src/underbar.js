@@ -299,8 +299,7 @@
       var key = JSON.stringify(arguments);
       if(storage[key]) {
         return storage[key];
-      }
-      else {
+      } else {
         var result = func.apply(this, arguments);
         storage[key] = result;
         return result;
@@ -362,11 +361,11 @@
   // of that string. For example, _.sortBy(people, 'name') should sort
   // an array of people by their name.
   _.sortBy = function(collection, iterator) {
-    if (typeof(iterator) === 'string') {
-
-    } else {
-
-    }
+    // if (typeof(iterator) === 'string') {
+    //   collection[iterator];
+    // } else {
+    //
+    // }
   };
 
   // Zip together two or more arrays with elements of the same index
@@ -409,7 +408,14 @@
   // Take the difference between one array and a number of other arrays.
   // Only the elements present in just the first array will remain.
   _.difference = function(array) {
+    var args = Array.prototype.slice.call(arguments);
+    return _.reduce(args, function(acc, curr) {
+      return _.filter(acc, function(num) {
+        return !(_.contains(curr, num));
+      });
+    });
   };
+
 
   // Returns a function, that, when invoked, will only be triggered at most once
   // during a given window of time.  See the Underbar readme for extra details
@@ -417,5 +423,6 @@
   //
   // Note: This is difficult! It may take a while to implement.
   _.throttle = function(func, wait) {
+
   };
 }());
