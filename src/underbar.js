@@ -52,17 +52,14 @@
   // iterator function over each item in the input collection.
   _.each = function(collection, iterator) {
     if(Array.isArray(collection)) {
-      var newColl = collection.slice(0);
-      for(var i = 0; i < newColl.length; i++) {
-        iterator(newColl[i], i, newColl);
+      for(var i = 0; i < collection.length; i++) {
+        iterator(collection[i], i, collection);
       }
-    } else {
-      var keys = Object.keys(collection);
-      for(var j = 0; j < keys.length; j++) {
-        iterator(collection[keys[j]], keys[j], collection);
+    } else if (typeof(collection) === 'object') {
+      for(var key in collection) {
+        iterator(collection[key], key, collection);
       }
     }
-
   };
 
   // Returns the index at which value can be found in the array, or -1 if value
@@ -293,10 +290,12 @@
   // _.memoize should return a function that, when called, will check if it has
   // already computed the result for the given argument and return that value
   // instead if possible.
+  // so for a specific function, you only run that function if the argument object is different
   _.memoize = function(func) {
     var storage = {};
     return function() {
-      var key = JSON.stringify(arguments);
+      var key = Array.prototype.slice.call(arguments, 1).join(' ');
+      console.log(key);
       if(storage[key]) {
         return storage[key];
       } else {
