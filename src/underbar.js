@@ -295,7 +295,6 @@
     var storage = {};
     return function() {
       var key = Array.prototype.slice.call(arguments, 1).join(' ');
-      console.log(key);
       if(storage[key]) {
         return storage[key];
       } else {
