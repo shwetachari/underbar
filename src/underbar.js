@@ -352,7 +352,13 @@
   // Calls the method named by functionOrKey on each value in the list.
   // Note: You will need to learn a bit about .apply to complete this.
   _.invoke = function(collection, functionOrKey, args) {
-
+    return _.map(collection, function(elem) {
+      if (typeof(functionOrKey) === 'function') {
+        return functionOrKey.apply(elem, args)
+      } else {
+        return elem[functionOrKey].apply(elem, args);
+      }
+    });
   };
 
   // Sort the object's values by a criterion produced by an iterator.
@@ -360,11 +366,11 @@
   // of that string. For example, _.sortBy(people, 'name') should sort
   // an array of people by their name.
   _.sortBy = function(collection, iterator) {
-    // if (typeof(iterator) === 'string') {
-    //   collection[iterator];
-    // } else {
-    //
-    // }
+    if (typeof(iterator) === 'string') {
+      // collection[iterator];
+    } else {
+
+    }
   };
 
   // Zip together two or more arrays with elements of the same index
